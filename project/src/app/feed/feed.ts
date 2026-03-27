@@ -5,7 +5,7 @@ import { Car } from '../interfaces/car.interface';
 
 @Component({
   selector: 'app-feed',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './feed.html',
   styleUrl: './feed.css',
 })

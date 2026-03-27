@@ -1,0 +1,38 @@
+<section class="car-details">
+@if (car){
+  <div class="details-container">
+
+
+    <div class="image-box">
+      <img [src]="car.image" [alt]="car.brand + ' ' + car.model" />
+    </div>
+
+
+    <div class="info-box">
+      <h1>{{ car.brand }} {{ car.model }}</h1>
+
+      <p class="year">
+        <strong>Year:</strong> {{ car.year }}
+      </p>
+
+      <p class="description">
+        {{ car.description }}
+      </p>
+
+
+      <div class="actions">
+        <a routerLink="/feed" class="btn back">Back</a>
+        <!-- <a [routerLink]="['/cars/edit', car.id]" class="btn edit">Edit</a>
+        <button (click)="deleteCar()" class="btn delete">Delete</button> -->
+      </div>
+    </div>
+
+  </div>
+} @else {
+    <div class="not-found">
+      <h2>Car Not Found</h2>
+      <p>The requested car does not exist.</p>
+      <a routerLink="/feed" class="back-btn">Back to Cars</a>
+    </div>
+} 
+</section>

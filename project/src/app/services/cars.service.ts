@@ -7,7 +7,7 @@ import { Car } from '../interfaces/car.interface';
 export class CarsService {
   private cars: Car[] = [
  {
-      "id": "1",
+      "id": 1,
       "brand": "BMW",
       "model": "330d",
       "year": 2015,
@@ -15,7 +15,7 @@ export class CarsService {
       "image": "https://www.mosselmanturbo.com/uploads/cars/detail_default/1200x675/bmw-328i-f30-f31-245hp.jpeg"
     },
     {
-      "id": "2",
+      "id": 2,
       "brand": "Volkswagen",
       "model": "Golf 5",
       "year": 2007,
@@ -23,7 +23,7 @@ export class CarsService {
       "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/2007_Volkswagen_Golf_%281K_MY07%29_Sportline_2.0_TDI_5-door_hatchback_%282010-07-05%29.jpg/1280px-2007_Volkswagen_Golf_%281K_MY07%29_Sportline_2.0_TDI_5-door_hatchback_%282010-07-05%29.jpg"
     },
     {
-      "id": "3",
+      "id": 3,
       "brand": "Mercedes-Benz",
       "model": "C63 AMG",
       "year": 2013,
@@ -31,7 +31,7 @@ export class CarsService {
       "image": "https://hips.hearstapps.com/hmg-prod/images/2023-mercedes-amg-c63-s-e-performance-118-65d7969b525e3.jpg?crop=0.742xw:0.628xh;0.207xw,0.204xh&resize=2048:*"
     },
     {
-      "id": "4",
+      "id": 4,
       "brand": "Audi",
       "model": "A4",
       "year": 2012,
@@ -43,6 +43,9 @@ export class CarsService {
 
   getAllCars(): Car[] {
     return this.cars;
+  }
+  getCarById(id: number): Car | undefined {
+    return this.cars.find(c => c.id === id);
   }
 
 }

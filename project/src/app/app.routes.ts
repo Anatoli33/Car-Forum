@@ -2,12 +2,19 @@ import { Routes } from '@angular/router';
 import { Home } from './home/home.js';
 import { Feed } from './feed/feed.js';
 import { Login } from './login/login.js';
+import { Details } from './details/details.js';
 import { NotFound } from './not-found/not-found.js';
 import { authGuard } from './guards/auth.guard';
+import { carResolver } from './guards/car.resolver.js';
 
 export const routes: Routes = [
     {path: '', component: Home},
     {path: 'feed', component: Feed, canActivate: [authGuard],},
+     {
+    path: 'feed/:id',
+    component: Details,
+    resolve: { car: carResolver },
+    },
     {path: 'login', component: Login},
     {path: '**', component: NotFound},
 ];
