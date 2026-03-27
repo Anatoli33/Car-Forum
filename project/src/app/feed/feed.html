@@ -1,0 +1,15 @@
+<div class="feed">
+    <h1>Here see the cars</h1>
+    @for (car of cars; track car.id) {
+  <div class="car-card">
+    
+    <img [src]="car.image" alt="car image" class="car-img" />
+
+    <h2>{{ car.brand }} {{ car.model }}</h2>
+    <p>{{ car.year }}</p>
+
+    <p>{{ car.description }}</p>
+
+  </div>
+}
+</div>
