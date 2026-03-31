@@ -4,6 +4,7 @@ import { Feed } from './feed/feed.js';
 import { Login } from './login/login.js';
 import { Details } from './details/details.js';
 import { Register } from './register/register.js';
+import { Create } from './create/create.js';
 import { NotFound } from './not-found/not-found.js';
 import { authGuard } from './guards/auth.guard';
 import { carResolver } from './guards/car.resolver.js';
@@ -12,6 +13,7 @@ export const routes: Routes = [
     {path: '', component: Home},
     {path: 'feed', component: Feed, canActivate: [authGuard],},
     {path: 'register', component: Register},
+    {path: 'create', component: Create},
      {
     path: 'feed/:id',
     component: Details,
