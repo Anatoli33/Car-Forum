@@ -1,0 +1,91 @@
+/* Section */
+.register {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Container */
+.register-container {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Title */
+.register-container h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #1e3a8a;
+}
+
+/* Form group */
+.form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+.form-group label {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* Inputs */
+.form-group input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  outline: none;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+/* Input focus */
+.form-group input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Button */
+.btn-register {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Button hover */
+.btn-register:hover {
+  background: #1d4ed8;
+}
+
+/* Login link */
+.login-link {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
