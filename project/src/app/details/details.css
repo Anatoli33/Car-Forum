@@ -1,113 +1,128 @@
+/* === Car Details Section === */
 .car-details {
   padding: 40px 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: white;
+  background: #f9fafb; /* softer background for contrast */
   min-height: 100vh;
+  font-family: 'Segoe UI', Roboto, sans-serif;
 }
 
-/* container */
+/* === Container === */
 .details-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* responsive columns */
   max-width: 1000px;
   width: 100%;
   background: #3b82f6;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-img{
-    width: 100%;
+.details-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
 }
 
-/* hover ефект */
+/* === Image === */
+.image-box img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
 .image-box:hover img {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
-/* info */
+/* === Info Box === */
 .info-box {
   padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  color: #f3f4f6;
 }
 
 .info-box h1 {
-  font-size: 28px;
-  color: #e5e7eb;
+  font-size: 2rem;
   margin-bottom: 10px;
+  color: #f9fafb;
+  letter-spacing: 0.5px;
 }
 
-/* year */
 .year {
-  color: white;
+  color: #ffffffaa; /* slightly transparent white for subtlety */
   margin-bottom: 15px;
+  font-weight: 500;
 }
 
-.year strong {
-  color: white;
-}
-
-/* description */
 .description {
-  color: #d1d5db;
-  line-height: 1.6;
+  color: #e5e7eb;
+  line-height: 1.7;
   margin-bottom: 25px;
 }
 
-/* actions */
+/* === Actions Buttons === */
 .actions {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
-/* button */
-.btn.back {
-  padding: 10px 16px;
-  background-color: orange;
-  color: white;
+.btn {
+  padding: 10px 18px;
   border-radius: 8px;
-  text-decoration: none;
   font-weight: 600;
-  transition: 0.25s;
-  box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn.back {
+  background-color: #fb923c; /* softer orange */
+  color: white;
 }
 
 .btn.back:hover {
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-/* not found */
+/* === Not Found Section === */
 .not-found {
   text-align: center;
   padding: 80px 20px;
-  color:#1976d2;
+  color: #1976d2;
 }
 
 .not-found h2 {
-  font-size: 26px;
-  margin-bottom: 10px;
+  font-size: 1.8rem;
+  margin-bottom: 12px;
 }
 
 .not-found p {
   color: #1e88e5;
+  font-size: 1rem;
 }
 
 .back-btn {
   display: inline-block;
   margin-top: 20px;
-  padding: 10px 16px;
+  padding: 10px 20px;
   background: #1e88e5;
   color: white;
   border-radius: 8px;
   text-decoration: none;
-  transition: 0.25s;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .back-btn:hover {
   background: #1976d2;
+  transform: translateY(-2px);
 }
