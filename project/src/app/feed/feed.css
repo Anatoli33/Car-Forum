@@ -4,6 +4,7 @@
   align-items: center;
   gap: 20px;
   padding: 20px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .car-card {
@@ -22,8 +23,8 @@
   display: inline-block;
   margin-top: 20px;
   padding: 10px 18px;
-  background-color: orange;
-  color: #ffffff;
+  background-color: white;
+  color: #2563eb;
   text-decoration: none;
   border-radius: 10px;
   font-weight: 600;
