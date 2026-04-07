@@ -1,0 +1,31 @@
+<section class="questions-feed">
+  <h1>Q&A</h1>
+
+  @for (q of questions; track q.id) {
+    <div class="question-card">
+
+      <h2>{{ q.title }}</h2>
+
+      <p class="description">
+        {{ q.description }}
+      </p>
+
+      @if (q.tags) {
+        <div class="tags">
+          @for (tag of q.tags.split(','); track tag) {
+            <span>#{{ tag.trim() }}</span>
+          }
+        </div>
+      }
+
+      <div class="meta">
+        <span>
+          {{ q.createdAt?.seconds 
+              ? (q.createdAt.seconds * 1000 | date:'short') 
+              : (q.createdAt | date:'short') }}
+        </span>
+      </div>
+
+    </div>
+  }
+</section>
