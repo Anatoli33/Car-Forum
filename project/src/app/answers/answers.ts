@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { getQuestions } from '../services/questions.js';
 import { CommonModule, DatePipe } from '@angular/common';
+import { Question } from '../interfaces/questions.interface.js';
 
 @Component({
   selector: 'app-answers',
@@ -8,14 +9,24 @@ import { CommonModule, DatePipe } from '@angular/common';
   templateUrl: './answers.html',
   styleUrl: './answers.css',
 })
-export class Answers implements OnInit{
-  questions: any[] = [];
+export class Answers implements OnInit {
+  questions = signal<Question[]>([]);
+  isLoading = signal(true);
+  error = signal<string | null>(null);
 
-  async ngOnInit() {
+  async loadQuestions() {
     try {
-      this.questions = await getQuestions();
+      const data = await getQuestions();
+      this.questions.set(data);
     } catch (err) {
-      console.error('Error loading questions:', err);
+      console.error(err);
+      this.error.set('Failed to load questions');
+    } finally {
+      this.isLoading.set(false);
     }
+  }
+
+  ngOnInit() {
+    this.loadQuestions();
   }
 }

@@ -1,7 +1,7 @@
 export interface Question {
-  id?: string;
+  id: string;
   title: string;
   description: string;
   tags?: string;
-  createdAt: Date;
+  createdAt: Date | any; 
 }

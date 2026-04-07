@@ -1,7 +1,19 @@
 <section class="questions-feed">
   <h1>Q&A</h1>
 
-  @for (q of questions; track q.id) {
+  @if (isLoading()) {
+    <p>Loading...</p>
+  }
+
+  @if (error()) {
+    <p class="error">{{ error() }}</p>
+  }
+
+  @if (!isLoading() && questions().length === 0) {
+    <p>No questions yet.</p>
+  }
+
+  @for (q of questions(); track q.id) {
     <div class="question-card">
 
       <h2>{{ q.title }}</h2>
