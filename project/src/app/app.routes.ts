@@ -6,9 +6,9 @@ import { Login } from './login/login.js';
 import { Register } from './register/register.js';
 import { Create } from './create/create.js';
 import { NotFound } from './not-found/not-found.js';
-
 // import { carResolver } from './guards/car.resolver.js';
 import { Questions } from './questions/questions';
+import { Answers } from './answers/answers';
 
 export const routes: Routes = [
     {path: '', component: Home},
@@ -16,6 +16,7 @@ export const routes: Routes = [
     {path: 'register', component: Register},
     {path: 'create', component: Create},
     {path: 'questions', component: Questions},
+    {path: 'answers', component: Answers},
     //  {
     // path: 'feed/:id',
     // component: Details,
