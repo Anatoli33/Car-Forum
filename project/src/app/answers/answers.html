@@ -1,5 +1,6 @@
 <section class="questions-feed">
   <h1>Q&A</h1>
+  <a routerLink="/questions" class="post-btn">Add Your Question</a>
 
   @if (isLoading()) {
     <p>Loading...</p>
@@ -10,7 +11,7 @@
   }
 
   @if (!isLoading() && questions().length === 0) {
-    <p>No questions yet.</p>
+    <h1>No questions yet...❓</h1>
   }
 
   @for (q of questions(); track q.id) {

@@ -2,10 +2,11 @@ import { Component, OnInit, signal } from '@angular/core';
 import { getQuestions } from '../services/questions.js';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Question } from '../interfaces/questions.interface.js';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-answers',
-  imports: [DatePipe, CommonModule],
+  imports: [DatePipe, CommonModule, RouterModule],
   templateUrl: './answers.html',
   styleUrl: './answers.css',
 })
