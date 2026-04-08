@@ -75,3 +75,11 @@ a{
   letter-spacing: 0.5px;
   transition: all 0.25s ease;
 }
+.buttons{
+  display: flex;
+  gap: 10px;
+}
+.buttons a{
+  color: white;
+  background-color: #2563eb;
+}
