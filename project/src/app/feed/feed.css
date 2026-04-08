@@ -43,3 +43,7 @@ a{
 .post-btn:hover{
     background-color: #1d4ed8;
 }
+.buttons{
+  display: flex;
+  gap: 10px;
+}
