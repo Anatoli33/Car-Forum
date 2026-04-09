@@ -1,31 +1,39 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { filter, map, take } from 'rxjs';
 
 export const guestGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  const user = authService.currentUser();
-
-  if (user) {
-    router.navigate(['/']);
-    return false;
-  }
-
-  return true; 
+  return toObservable(authService.currentUser).pipe(
+    filter((user) => user !== undefined), 
+    take(1),                               
+    map((user) => {
+      if (user) {
+        router.navigate(['/']); 
+        return false;
+      }
+      return true; 
+    })
+  );
 };
-export const authGuard: CanActivateFn = async () => {
+
+export const authGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-
-  const user = authService.currentUser();
-
-  if (!user) {
-    router.navigate(['/login']);
-    return false;
-  }
-
-  return true;
+  return toObservable(authService.currentUser).pipe(
+    filter((user) => user !== undefined),
+    take(1),
+    map((user) => {
+      if (!user) {
+        router.navigate(['/login']);
+        return false;
+      }
+      return true; 
+    })
+  );
 };
