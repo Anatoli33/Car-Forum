@@ -1,20 +1,21 @@
 import { Injectable, signal } from '@angular/core';
+import { onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { Auth } from './auth.js';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn = signal(false);
 
-  isLoggedIn(): boolean {
-    return this.loggedIn();
+  currentUser = signal<User | null>(null);
+
+  constructor() {
+    onAuthStateChanged(Auth, (user) => {
+      this.currentUser.set(user);
+    });
   }
 
-  login(): void {
-    this.loggedIn.set(true);
-  }
-
-  logout(): void {
-    this.loggedIn.set(false);
+  logout() {
+    return signOut(Auth);
   }
 }
