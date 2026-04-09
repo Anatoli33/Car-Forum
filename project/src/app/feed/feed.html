@@ -14,6 +14,14 @@
       <p>{{ car.year }}</p>
 
       <p>{{ car.description }}</p>
+      
+      @if (car.tags) {
+          <div class="tags-container">
+            @for (tag of (car.tags.split ? car.tags.split(',') : car.tags); track $index) {
+              <span class="tag">#{{ tag.trim() }}</span>
+            }
+          </div>
+        }
 
       <!-- Meta / Created At -->
       <div class="meta">
