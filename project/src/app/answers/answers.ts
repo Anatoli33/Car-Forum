@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { getQuestions } from '../services/questions.js';
+import { deleteQuestion, getQuestions } from '../services/questions.js';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Question } from '../interfaces/questions.interface.js';
 import { RouterModule } from '@angular/router';
@@ -29,5 +29,15 @@ export class Answers implements OnInit {
 
   ngOnInit() {
     this.loadQuestions();
+  }
+  async onDelete(id: string) {
+    const confirmDelete = confirm('Are you sure you want to delete this car?');
+  
+    if (!confirmDelete) return;
+  
+    await deleteQuestion(id);
+  
+    
+    this.questions.update(questions => questions.filter(q => q.id !== id));
   }
 }

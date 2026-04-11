@@ -3,6 +3,7 @@ import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 import { app } from "./firebase";
 import { Question } from "../interfaces/questions.interface.js";
 import { serverTimestamp } from "firebase/firestore";
+import { doc, deleteDoc } from "firebase/firestore";
 
 const db = getFirestore(app);
 export async function getQuestions(): Promise<Question[]> {
@@ -36,4 +37,8 @@ export async function addQuestion(question: Question) {
     console.error("Error adding question:", error);
     throw error;
   }
+}
+export async function deleteQuestion(id: string) {
+  const questionRef = doc(db, "questions", id);
+  await deleteDoc(questionRef);
 }
