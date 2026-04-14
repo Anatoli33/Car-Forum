@@ -1,0 +1,16 @@
+@if (question()) {
+  <div class="details">
+    <h1>{{ question().title }}</h1>
+
+    <p>{{ question().description }}</p>
+
+    <p>
+      Likes: {{ question().likes || 0 }}
+    </p>
+     <a class="btn" routerLink="/answers">
+        ⬅ Back
+    </a>
+  </div>
+} @else {
+  <p>Loading...</p>
+}

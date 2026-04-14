@@ -1,4 +1,4 @@
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, getDoc } from "firebase/firestore";
 import { app } from "./firebase";
 import { Question } from "../interfaces/questions.interface.js";
 import { serverTimestamp } from "firebase/firestore";
@@ -49,4 +49,15 @@ export async function likeQuestion(questionId: string) {
   await updateDoc(questionRef, {
     likes: increment(1)
   });
+}
+
+export async function getQuestionById(id: string) {
+  const ref = doc(db, 'questions', id);
+  const snap = await getDoc(ref);
+
+  if (snap.exists()) {
+    return { id: snap.id, ...snap.data() };
+  }
+
+  return null;
 }

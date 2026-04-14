@@ -20,7 +20,13 @@ export const routes: Routes = [
   {
   path: 'cars/:id',
   loadComponent: () => import('./details/details').then(m => m.CarDetails)
-  }, 
+  },
+  {
+  path: 'questions/:id',
+  loadComponent: () =>
+    import('./details-answers/details-answers')
+      .then(m => m.DetailsAnswersComponent)
+  },
 
   
   { path: 'register', component: Register, canActivate: [guestGuard]},
