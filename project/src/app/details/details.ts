@@ -1,20 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { Car } from '../interfaces/car.interface.js';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Component, signal, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { getCarById } from '../services/cars';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-details',
-  imports: [RouterLink],
+  selector: 'app-car-details',
+  imports:[DatePipe, RouterModule],
   templateUrl: './details.html',
   styleUrl: './details.css',
 })
-export class Details implements OnInit{
-  car: Car | undefined;
 
-  constructor(private route: ActivatedRoute){}
+export class CarDetails implements OnInit {
+  car = signal<any>(null);
 
-  ngOnInit(): void {
-    this.car = this.route.snapshot.data['car'];
+  constructor(private route: ActivatedRoute) {}
+
+  async ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+
+    if (id) {
+      const data = await getCarById(id);
+      this.car.set(data);
+    }
   }
-
 }

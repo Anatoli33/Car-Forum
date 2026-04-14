@@ -17,6 +17,10 @@ export const routes: Routes = [
   { path: '', component: Home },
   { path: 'feed', component: Feed },
   { path: 'answers', component: Answers }, 
+  {
+  path: 'cars/:id',
+  loadComponent: () => import('./details/details').then(m => m.CarDetails)
+  }, 
 
   
   { path: 'register', component: Register, canActivate: [guestGuard]},

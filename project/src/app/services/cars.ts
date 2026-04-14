@@ -21,12 +21,12 @@ export async function getCars() {
 
 export async function addCar(car: Car) {
   try {
-    const carsCollection = collection(db, "cars"); // колекция "cars"
+    const carsCollection = collection(db, "cars"); 
     const docRef = await addDoc(carsCollection, car);
     console.log("Car added with ID:", docRef.id);
   } catch (error) {
     console.error("Error adding car:", error);
-    throw error; // за да може компонентът да хване грешката
+    throw error; 
   }
 }
 

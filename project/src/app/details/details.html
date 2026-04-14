@@ -1,38 +1,55 @@
-<section class="car-details">
-@if (car){
+@if (car(); as c) {
   <div class="details-container">
+    <div class="details-card">
 
+      <!-- IMAGE -->
+      <div class="image-section">
+        <img [src]="c.image" alt="car image" />
+      </div>
 
-    <div class="image-box">
-      <img [src]="car.image" [alt]="car.brand + ' ' + car.model" />
-    </div>
+      <!-- INFO -->
+      <div class="info-section">
+        <h1>{{ c.brand }} {{ c.model }}</h1>
 
+        <div class="meta">
+          <span>Year: {{ c.year }}</span>
 
-    <div class="info-box">
-      <h1>{{ car.brand }} {{ car.model }}</h1>
+          <span>
+            {{
+              c.createdAt?.seconds
+                ? (c.createdAt.seconds * 1000 | date: 'medium')
+                : (c.createdAt | date: 'medium')
+            }}
+          </span>
+        </div>
 
-      <p class="year">
-        <strong>Year:</strong> {{ car.year }}
-      </p>
+        <p class="description">
+          {{ c.description }}
+        </p>
 
-      <p class="description">
-        {{ car.description }}
-      </p>
+        <!-- TAGS -->
+        @if (c.tags) {
+          <div class="tags">
+            @for (tag of c.tags.split ? c.tags.split(',') : c.tags; track $index) {
+              <span class="tag">#{{ tag.trim() }}</span>
+            }
+          </div>
+        }
 
+        <!-- BUTTONS -->
+        <div class="actions">
+          <button class="btn like">
+            ❤️ Like {{ c.likes || 0 }}
+          </button>
 
-      <div class="actions">
-        <a routerLink="/feed" class="btn back">Back</a>
-        <!-- <a [routerLink]="['/cars/edit', car.id]" class="btn edit">Edit</a>
-        <button (click)="deleteCar()" class="btn delete">Delete</button> -->
+          <button class="btn">💬 Comment</button>
+
+          <a class="btn back" routerLink="/feed">
+            ⬅ Back
+          </a>
+        </div>
+
       </div>
     </div>
-
   </div>
-} @else {
-    <div class="not-found">
-      <h2>Car Not Found</h2>
-      <p>The requested car does not exist.</p>
-      <a routerLink="/feed" class="back-btn">Back to Cars</a>
-    </div>
-} 
-</section>
+}
