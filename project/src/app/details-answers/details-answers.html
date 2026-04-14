@@ -3,13 +3,10 @@
     <h1>{{ question().title }}</h1>
 
     <p>{{ question().description }}</p>
-
-    <p>
-      Likes: {{ question().likes || 0 }}
-    </p>
-     <a class="btn" routerLink="/answers">
-        ⬅ Back
-    </a>
+    <div class="flex">
+    <p>Likes: {{ question().likes || 0 }}</p>
+    <a class="btn" routerLink="/answers"> ⬅ Back </a>
+    </div>
   </div>
 } @else {
   <p>Loading...</p>
