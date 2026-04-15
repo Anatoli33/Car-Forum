@@ -43,7 +43,7 @@
       <a class="details-btn" (click)="onLike(q.id)">
       Like❤️ {{ q.likes || 0 }}
       </a>
-      <a class="details-btn">Comment 💬</a>
+      <a class="details-btn" [routerLink]="['/questions', q.id]">Comment 💬</a>
       <a class="details-btn" [routerLink]="['/questions', q.id]">
       Details 👀
       </a>

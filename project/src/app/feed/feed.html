@@ -35,7 +35,7 @@
         <a class="details-btn" (click)="onLike(car.id)">
         Like❤️ {{ car.likes || 0 }}
         </a>
-        <a class="details-btn">Comment 💬</a>
+        <a [routerLink]="['/cars', car.id]" class="details-btn">Comment 💬</a>
         <a [routerLink]="['/cars', car.id]" class="details-btn">
         Details 👀
         </a>
