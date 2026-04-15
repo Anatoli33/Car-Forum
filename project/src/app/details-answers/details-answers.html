@@ -1,13 +1,37 @@
-@if (question()) {
-  <div class="details">
-    <h1>{{ question().title }}</h1>
+@if (question(); as q) {
+  <div class="details-container">
+    <div class="details-card">
 
-    <p>{{ question().description }}</p>
-    <div class="flex">
-    <p>Likes: {{ question().likes || 0 }}</p>
-    <a class="btn" routerLink="/answers"> ⬅ Back </a>
+      <!-- INFO -->
+      <div class="info-section">
+
+        <h1>{{ q.title }}</h1>
+
+
+        <p class="description">
+          {{ q.description }}
+        </p>
+
+
+        <!-- BUTTONS -->
+        <div class="actions">
+
+          <button class="btn like">
+            ❤️ Like {{ q.likes || 0 }}
+          </button>
+
+          <button class="btn comment">
+            💬 Comment
+          </button>
+
+          <a class="btn back" routerLink="/answers">
+            ⬅ Back
+          </a>
+
+        </div>
+
+      </div>
+
     </div>
   </div>
-} @else {
-  <p>Loading...</p>
 }

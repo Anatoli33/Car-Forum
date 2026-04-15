@@ -44,7 +44,7 @@ export class Profile implements OnInit {
         this.user.set({
           id: firebaseUser.uid,
           username: firebaseUser.displayName || firebaseUser.email,
-          avatar: firebaseUser.photoURL || 'https://i.pravatar.cc/150'
+          avatar: firebaseUser.photoURL || 'https://www.citypng.com/public/uploads/preview/profile-user-round-white-icon-symbol-png-701751695033499brrbuebohc.png'
         });
       } else {
         this.user.set(null);
