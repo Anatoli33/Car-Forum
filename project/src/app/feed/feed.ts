@@ -37,12 +37,21 @@ export class Feed {
 }
 async onLike(carId: string) {
   this.cars.update(cars =>
-    cars.map(car =>
-      car.id === carId
-        ? { ...car, likes: (car.likes || 0) + 1 }
-        : car
-    )
+    cars.map(car => {
+      if (car.id !== carId) return car;
+
+      const isLiked = car.likedByMe ?? false;
+
+      return {
+        ...car,
+        likedByMe: !isLiked,
+        likes: isLiked
+          ? (car.likes || 1) - 1
+          : (car.likes || 0) + 1,
+      };
+    })
   );
+
   await likeCar(carId);
 }
 }
