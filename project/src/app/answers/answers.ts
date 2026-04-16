@@ -8,7 +8,6 @@ import { AuthService } from '../services/auth.service.js';
 
 @Component({
   selector: 'app-answers',
-  standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './answers.html',
   styleUrl: './answers.css',
@@ -28,21 +27,20 @@ export class Answers implements OnInit {
     try {
       const data = await getQuestions();
 
-      // Тук добавяме "филтър", който превръща likes в масив, ако идва като число
       const sanitizedData = data.map((q: Question) => ({
         ...q,
         likes: Array.isArray(q.likes) ? q.likes : [],
       }));
 
-      // Вече подаваме чистите данни
       this.questions.set(sanitizedData);
     } catch (err) {
       console.error(err);
-      this.error.set('Failed to load questions');
+      this.error.set('Грешка при зареждане на въпросите');
     } finally {
       this.isLoading.set(false);
     }
   }
+
   async onDelete(id: string | undefined) {
     if (!id) return;
 
@@ -50,33 +48,32 @@ export class Answers implements OnInit {
     const currentUser = this.authService.currentUser();
 
     if (questionToDelete?.ownerId !== currentUser?.uid) {
-      alert("You don't have permission to delete this!");
+      alert("Нямате разрешение да изтриете този въпрос!");
       return;
     }
 
-    const confirmDelete = confirm('Are you sure you want to delete this question?');
+    const confirmDelete = confirm('Сигурни ли сте, че искате да изтриете този въпрос?');
     if (!confirmDelete) return;
 
     try {
       await deleteQuestion(id);
-
       this.questions.update((questions) => questions.filter((q) => q.id !== id));
     } catch (err) {
       console.error('Error deleting:', err);
-      alert('Failed to delete question.');
+      alert('Възникна грешка при опит за изтриване на въпроса.');
     }
   }
 
   async onLike(questionId: string | undefined) {
     const currentUser = this.authService.currentUser();
     if (!questionId || !currentUser) {
-      alert('Трябва да сте влезли в профила си, за да харесвате!');
+      alert('Моля, влезте в профила си, за да харесвате!');
       return;
     }
 
     const userId = currentUser.uid;
 
-    // Оптимистично обновяване на UI (веднага променяме картинката/броя)
+  
     this.questions.update((questions) =>
       questions.map((q) => {
         if (q.id === questionId) {
@@ -95,7 +92,8 @@ export class Answers implements OnInit {
       await likeQuestion(questionId, userId);
     } catch (err) {
       console.error('Грешка при лайкване:', err);
-      this.loadQuestions();
+      alert('Възникна грешка при отразяване на харесването.');
+      this.loadQuestions(); 
     }
   }
 }

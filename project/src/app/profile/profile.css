@@ -6,7 +6,7 @@
 
 /* Header Section */
 .profile-header {
-  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  background-color: #3b82f6;
   padding: 40px;
   border-radius: 24px;
   color: white;
@@ -47,7 +47,7 @@
 }
 
 .profile-tabs button.active {
-  background: #2563eb;
+  background: #3b82f6;
   color: white;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
