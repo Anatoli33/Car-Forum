@@ -126,13 +126,7 @@ http://localhost:4200
 ---
 
 ## 🔒 Future Improvements
-
-* 🔐 Authentication (login/register)
-* ❤️ Like system with real-time updates
-* 💬 Comments (cars & questions)
-* 🧑‍🔧 User profiles
 * 📱 Fully responsive design
-* ⚡ Firestore real-time listeners
 * 🔎 Search & filtering
 
 ---
