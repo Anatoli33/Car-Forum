@@ -1,58 +1,56 @@
-import { Component, signal, OnInit } from '@angular/core';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-
-type Tab = 'cars' | 'questions';
+import { Component, OnInit, signal, computed, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { AuthService } from '../services/auth.service.js';
+import { getCars } from '../services/cars.js';
+import { getQuestions } from '../services/questions.js';
+import { Car } from '../interfaces/car.interface.js';
+import { Question } from '../interfaces/questions.interface.js';
 
 @Component({
   selector: 'app-profile',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './profile.html',
-  styleUrl: './profile.css',
+  styleUrl: './profile.css'
 })
 export class Profile implements OnInit {
+  public authService = inject(AuthService);
+  
+  allCars = signal<Car[]>([]);
+  allQuestions = signal<Question[]>([]);
+  selectedTab = signal<'cars' | 'questions'>('cars');
+  isLoading = signal(true);
 
-  auth = getAuth();
 
-  // 🔥 user from firebase (NOT hardcoded)
-  user = signal<any>(null);
+  user = computed(() => this.authService.currentUser());
 
-  selectedTab = signal<Tab>('cars');
 
-  cars = signal([
-    {
-      id: '1',
-      model: 'VW Golf 5',
-      description: '1.6 FSI clean build',
-      likes: 10,
-      ownerId: 'user123'
+  userCars = computed(() => 
+    this.allCars().filter(car => car.ownerId === this.user()?.uid)
+  );
+
+
+  userQuestions = computed(() => 
+    this.allQuestions().filter(q => q.ownerId === this.user()?.uid)
+  );
+
+  async ngOnInit() {
+    try {
+
+      const carsData = await getCars() as Car[];
+      const questionsData = await getQuestions() as Question[];
+      
+      this.allCars.set(carsData);
+      this.allQuestions.set(questionsData);
+    } catch (error) {
+      console.error("Грешка при зареждане на профила:", error);
+    } finally {
+      this.isLoading.set(false);
     }
-  ]);
-
-  questions = signal([
-    {
-      id: '1',
-      title: 'Как да направя Golf да пука?',
-      description: 'Софтуер или генерация?',
-      likes: 5,
-      ownerId: 'user123'
-    }
-  ]);
-
-  ngOnInit() {
-    // 🔥 listen for auth changes
-    onAuthStateChanged(this.auth, (firebaseUser) => {
-      if (firebaseUser) {
-        this.user.set({
-          id: firebaseUser.uid,
-          username: firebaseUser.displayName || firebaseUser.email,
-          avatar: firebaseUser.photoURL || 'https://www.citypng.com/public/uploads/preview/profile-user-round-white-icon-symbol-png-701751695033499brrbuebohc.png'
-        });
-      } else {
-        this.user.set(null);
-      }
-    });
   }
 
-  setTab(tab: Tab) {
+  setTab(tab: 'cars' | 'questions') {
     this.selectedTab.set(tab);
   }
 }

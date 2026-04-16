@@ -1,48 +1,67 @@
-<div class="profile">
+<div class="profile-container">
+  
+  @if (user(); as u) {
+    <div class="profile-header">
+      <img [src]="u.photoURL || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'" class="profile-avatar" />
+      <div class="profile-info">
+        <h1>{{ u.displayName || 'User' }}</h1>
+        <p class="email">{{ u.email }}</p>
+        <p class="uid">ID: {{ u.uid }}</p>
+      </div>
+    </div>
+  }
 
-  <!-- HEADER -->
-@if (user()) {
-  <div class="header">
-    <img [src]="user().avatar" class="avatar" />
-    <h2>@{{ user().username }}</h2>
-  </div>
-}
-  <!-- TABS -->
-  <div class="tabs">
+  <div class="profile-tabs">
     <button (click)="setTab('cars')" [class.active]="selectedTab() === 'cars'">
-      Cars
+      🚗 My Cars ({{ userCars().length }})
     </button>
-
     <button (click)="setTab('questions')" [class.active]="selectedTab() === 'questions'">
-      Questions
+      ❓ My Questions ({{ userQuestions().length }})
     </button>
   </div>
 
-  <!-- CONTENT -->
-  <div class="content">
+  <div class="profile-content">
+    @if (isLoading()) {
+      <div class="loading">Loading your content...</div>
+    } @else {
+      
+      @if (selectedTab() === 'cars') {
+        <div class="items-grid">
+          @for (car of userCars(); track car.id) {
+            <div class="item-card">
+              <img [src]="car.image" class="item-img" />
+              <div class="item-details">
+                <h3>{{ car.brand }} {{ car.model }}</h3>
+                <p>{{ car.year }}</p>
+                <div class="item-footer">
+                  <a [routerLink]="['/cars', car.id]" class="view-btn">View</a>
+                </div>
+              </div>
+            </div>
+          } @empty {
+            <div class="empty-state">You haven't posted any cars yet.</div>
+          }
+        </div>
+      }
 
-    <!-- 🚗 CARS -->
-    @if (selectedTab() === 'cars') {
-      @for (car of cars(); track car.id) {
-        <div class="card">
-          <h3>{{ car.model }}</h3>
-          <p>{{ car.description }}</p>
-          <span>❤️ {{ car.likes }}</span>
+      @if (selectedTab() === 'questions') {
+        <div class="items-list">
+          @for (q of userQuestions(); track q.id) {
+            <div class="item-list-card">
+              <div class="list-info">
+                <h3>{{ q.title }}</h3>
+                <p>{{ q.description | slice:0:100 }}...</p>
+              </div>
+              <div class="item-footer">
+                <span class="likes">❤️ {{ q.likes || 0 }}</span>
+                <a [routerLink]="['/questions', q.id]" class="view-btn">Open</a>
+              </div>
+            </div>
+          } @empty {
+            <div class="empty-state">You haven't asked any questions yet.</div>
+          }
         </div>
       }
     }
-
-    <!-- ❓ QUESTIONS -->
-    @if (selectedTab() === 'questions') {
-      @for (q of questions(); track q.id) {
-        <div class="card">
-          <h3>{{ q.title }}</h3>
-          <p>{{ q.description }}</p>
-          <span>❤️ {{ q.likes }}</span>
-        </div>
-      }
-    }
-
   </div>
-
 </div>
