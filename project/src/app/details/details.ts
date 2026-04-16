@@ -1,17 +1,9 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, signal, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { getCarById } from '../services/cars';
 import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { onSnapshot } from 'firebase/firestore';
-
-import {
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  orderBy
-} from 'firebase/firestore';
+import { collection, addDoc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 
 import { db } from '../services/firestore.js';
 import { AuthService } from '../services/auth.service.js';
@@ -24,44 +16,46 @@ import { AuthService } from '../services/auth.service.js';
   styleUrl: './details.css',
 })
 export class CarDetails implements OnInit {
+  private cdr = inject(ChangeDetectorRef);
+  private route = inject(ActivatedRoute);
+  public authService = inject(AuthService);
 
   car = signal<any>(null);
   carId: string = '';
-
   commentText = '';
   comments = signal<any[]>([]);
 
-  constructor(
-    private route: ActivatedRoute,
-    public authService: AuthService
-  ) {}
-
   async ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-
     if (id) {
       this.carId = id;
-
-      const data = await getCarById(id);
-      this.car.set(data);
-
-      this.loadComments(id); // ✅ без await
+      try {
+        const data = await getCarById(id);
+        this.car.set(data);
+        this.loadComments(id);
+        this.cdr.detectChanges();
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
 
   loadComments(carId: string) {
-    const q = query(
-      collection(db, `cars/${carId}/comments`),
-      orderBy('createdAt', 'desc')
-    );
+    const q = query(collection(db, `cars/${carId}/comments`), orderBy('createdAt', 'desc'));
 
     onSnapshot(q, (snapshot) => {
-      this.comments.set(
-        snapshot.docs.map(doc => ({
+      const loadedComments = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
           id: doc.id,
-          ...doc.data()
-        }))
-      );
+          ...data,
+          createdAt:
+            data['createdAt'] instanceof Timestamp ? data['createdAt'].toDate() : new Date(),
+        };
+      });
+
+      this.comments.set(loadedComments);
+      this.cdr.detectChanges(); 
     });
   }
 
@@ -71,13 +65,17 @@ export class CarDetails implements OnInit {
     const user = this.authService.currentUser();
     if (!user) return;
 
-    await addDoc(collection(db, `cars/${this.carId}/comments`), {
-      text: this.commentText,
-      userId: user.uid,
-      username: user.displayName || user.email,
-      createdAt: new Date()
-    });
+    try {
+      await addDoc(collection(db, `cars/${this.carId}/comments`), {
+        text: this.commentText,
+        userId: user.uid,
+        username: user.displayName || user.email?.split('@')[0] || 'Anonymous',
+        createdAt: new Date(), 
+      });
 
-    this.commentText = ''; // ✅ това е достатъчно
+      this.commentText = '';
+    } catch (error) {
+      console.error('Грешка:', error);
+    }
   }
 }

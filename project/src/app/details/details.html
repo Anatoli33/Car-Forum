@@ -1,12 +1,9 @@
 @if (car(); as c) {
   <div class="details-container">
     <div class="details-card">
-
-
       <div class="image-section">
         <img [src]="c.image" alt="car image" />
       </div>
-
 
       <div class="info-section">
         <h1>{{ c.brand }} {{ c.model }}</h1>
@@ -27,7 +24,6 @@
           {{ c.description }}
         </p>
 
-
         @if (c.tags) {
           <div class="tags">
             @for (tag of c.tags.split ? c.tags.split(',') : c.tags; track $index) {
@@ -36,53 +32,38 @@
           </div>
         }
 
-
         <div class="actions">
-          <button class="btn like">
-            ❤️ Like {{ c.likes || 0 }}
-          </button>
+          <button class="btn like">❤️ Like {{ c.likes || 0 }}</button>
 
-          <a class="btn back" routerLink="/feed">
-            ⬅ Back
-          </a>
+          <a class="btn back" routerLink="/feed"> ⬅ Back </a>
         </div>
 
-<div class="comments-section">
+        <div class="comments-section">
+          <h2>Comments</h2>
 
-  <h2>Comments</h2>
+          @if (authService.currentUser()) {
+            <div class="add-comment">
+              <textarea [(ngModel)]="commentText" placeholder="Write a comment..."></textarea>
+              <button (click)="addComment()" class="btn comment-btn">Post</button>
+            </div>
+          }
 
-
-        @if (authService.currentUser()) {
-    <div class="add-comment">
-      <textarea
-        [(ngModel)]="commentText"
-        placeholder="Write a comment..."
-      ></textarea>
-
-      <button (click)="addComment()" class="btn comment-btn">
-        Post
-      </button>
-    </div>
-  }
-
-
-  @for (comment of comments(); track comment.id) {
-    <div class="comment-box">
-      <div class="comment-header">
-        <span class="username">{{ comment.username }}</span>
-        <span class="date">
-          {{ comment.createdAt | date: 'short' }}
-        </span>
-      </div>
-
-      <p class="comment-text">
-        {{ comment.text }}
-      </p>
-    </div>
-  }
-
-</div>
-
+          <div class="comments-list">
+            @for (comment of comments(); track comment.id) {
+              @if (comment.text || comment.username) {
+                <div class="comment-box">
+                  <div class="comment-header">
+                    <span class="username">{{ comment.username || 'Anonymous' }}</span>
+                    <span class="date">{{ comment.createdAt | date: 'short' }}</span>
+                  </div>
+                  <p class="comment-text">{{ comment.text }}</p>
+                </div>
+              }
+            } @empty {
+              <p>No comments yet.</p>
+            }
+          </div>
+        </div>
       </div>
     </div>
   </div>
