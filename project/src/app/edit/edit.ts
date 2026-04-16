@@ -1,19 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { getCarById, updateCar } from '../services/cars';
 import { FormsModule } from '@angular/forms';
 import { Car } from '../interfaces/car.interface';
 
-
 @Component({
   selector: 'app-edit-car',
-  standalone: true, 
   imports: [FormsModule],
   templateUrl: './edit.html',
   styleUrl: './edit.css',
 })
-export class EditCarComponent {
-
+export class EditCarComponent implements OnInit {
   carId!: string;
 
   car: Car = {
@@ -27,37 +24,44 @@ export class EditCarComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef 
   ) {}
 
-async ngOnInit() {
-  const id = this.route.snapshot.paramMap.get('id');
+  async ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
 
-  if (!id) {
-    this.router.navigate(['/']);
-    return;
+    if (!id) {
+      this.router.navigate(['/feed']);
+      return;
+    }
+
+    this.carId = id;
+
+    try {
+      const data = await getCarById(this.carId);
+
+      if (!data) {
+        this.router.navigate(['/feed']);
+        return;
+      }
+
+      this.car = { ...data };
+
+      this.cdr.detectChanges(); 
+      
+    } catch (error) {
+      console.error('Грешка при зареждане на колата:', error);
+      this.router.navigate(['/']);
+    }
   }
 
-  this.carId = id;
-;
-
- const data = await getCarById(this.carId);
-
-if (!data) {
-  this.router.navigate(['/']);
-  return;
-}
-
-this.car.brand = data.brand;
-this.car.model = data.model;
-this.car.year = data.year;
-this.car.image = data.image;
-this.car.description = data.description;
-
-
-}
   async onSubmit() {
-    await updateCar(this.carId, this.car);
-    this.router.navigate(['/']);
+    try {
+      await updateCar(this.carId, this.car);
+      this.router.navigate(['/feed']);
+    } catch (error) {
+      console.error('Грешка при запис:', error);
+    }
   }
 }
