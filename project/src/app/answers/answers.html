@@ -16,7 +16,6 @@
 
   @for (q of questions(); track q.id) {
     <div class="question-card">
-
       <h2>{{ q.title }}</h2>
 
       <p class="description">
@@ -25,8 +24,10 @@
 
       @if (q.tags) {
         <div class="tags">
-          @for (tag of q.tags.split(','); track tag) {
-            <span>#{{ tag.trim() }}</span>
+          @for (tag of (q.tags || '').split(','); track tag) {
+            @if (tag.trim()) {
+              <span>#{{ tag.trim() }}</span>
+            }
           }
         </div>
       }
@@ -40,15 +41,18 @@
       </div>
       
       <div class="buttons">
-      <a class="details-btn" (click)="onLike(q.id)">
+  <a class="details-btn" (click)="onLike(q.id)">
       Like❤️ {{ q.likes || 0 }}
       </a>
       <a class="details-btn" [routerLink]="['/questions', q.id]">Comment 💬</a>
       <a class="details-btn" [routerLink]="['/questions', q.id]">
       Details 👀
       </a>
-      <a class="details-btn" [routerLink]="['/questions', q.id, 'edit']">Edit  ✏️</a>
-      <a class="details-btn" (click)="onDelete(q.id)">Delete 🗑️</a>
+
+        @if (authService.currentUser()?.uid === q.ownerId) {
+          <a class="details-btn" [routerLink]="['/questions', q.id, 'edit']">Edit ✏️</a>
+          <a class="details-btn delete" (click)="onDelete(q.id)">Delete 🗑️</a>
+        }
       </div>
     </div>
   }

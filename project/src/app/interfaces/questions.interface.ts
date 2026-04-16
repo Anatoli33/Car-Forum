@@ -1,8 +1,9 @@
 export interface Question {
-  id: string;
+  id?: string;
   title: string;
   description: string;
   tags?: string;
   createdAt: Date | any; 
   likes: number;
+  ownerId?: string;
 }
