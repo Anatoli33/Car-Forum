@@ -33,7 +33,6 @@
         }
 
         <div class="actions">
-          <button class="btn like">❤️ Like {{ c.likes || 0 }}</button>
 
           <a class="btn back" routerLink="/feed"> ⬅ Back </a>
         </div>
@@ -46,6 +45,8 @@
               <textarea [(ngModel)]="commentText" placeholder="Write a comment..."></textarea>
               <button (click)="addComment()" class="btn comment-btn">Post</button>
             </div>
+          } @else {
+            <p class="login-prompt">Please log in to leave a comment.</p>
           }
 
           <div class="comments-list">
