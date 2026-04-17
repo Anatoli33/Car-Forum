@@ -6,7 +6,7 @@ export interface Car{
     description: string,
     image: string,
     tags?: string;
-    createdAt: Date | any; 
+    createdAt: Date ; 
     ownerId?: string;
     likes?: number;
     likedBy?: string[];

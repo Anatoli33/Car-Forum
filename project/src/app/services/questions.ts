@@ -28,7 +28,7 @@ export async function getQuestions(): Promise<Question[]> {
       description: data.description,
       tags: data.tags,
       ownerId: data.ownerId,
-      createdAt: data.createdAt?.toDate?.() ?? new Date(),
+      createdAt: data.createdAt ?? new Date(),
       likes: data.likes ?? 0,
     };
   });

@@ -3,7 +3,7 @@ export interface Question {
   title: string;
   description: string;
   tags?: string;
-  createdAt: Date | any;
+  createdAt: Date ;
   likes: string[];
   ownerId?: string;
 }
