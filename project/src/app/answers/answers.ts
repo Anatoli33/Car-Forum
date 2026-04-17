@@ -23,23 +23,25 @@ export class Answers implements OnInit {
     await this.loadQuestions();
   }
 
-  async loadQuestions() {
-    try {
-      const data = await getQuestions();
+async loadQuestions() {
+  try {
+    const data = await getQuestions();
+    
+    const sanitizedData = data.map((q: any) => ({
+      ...q,
 
-      const sanitizedData = data.map((q: Question) => ({
-        ...q,
-        likes: Array.isArray(q.likes) ? q.likes : [],
-      }));
+      likes: Array.isArray(q.likes) ? q.likes : [],
 
-      this.questions.set(sanitizedData);
-    } catch (err) {
-      console.error('Error fetching questions:', err);
-      this.error.set('Failed to load questions. Please try again later.');
-    } finally {
-      this.isLoading.set(false);
-    }
+      createdAt: q.createdAt?.toDate ? q.createdAt.toDate() : q.createdAt
+    }));
+
+    this.questions.set(sanitizedData);
+  } catch (err) {
+    this.error.set('Loading error.');
+  } finally {
+    this.isLoading.set(false);
   }
+}
 
   async onDelete(id: string | undefined) {
     if (!id) return;

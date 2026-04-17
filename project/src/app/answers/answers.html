@@ -32,15 +32,11 @@
         </div>
       }
 
-      <div class="meta">
-        <span>
-          {{
-            q.createdAt?.seconds
-              ? (q.createdAt.seconds * 1000 | date: 'short')
-              : (q.createdAt | date: 'short')
-          }}
-        </span>
-      </div>
+<div class="meta">
+  <span>
+    {{ q.createdAt | date: 'short' }}
+  </span>
+</div>
 
       <div class="buttons">
         <a (click)="onLike(q.id)" class="like-btn" style="cursor: pointer">

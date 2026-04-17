@@ -10,7 +10,6 @@ import { AuthService } from '../services/auth.service.js';
 
 @Component({
   selector: 'app-car-details',
-  standalone: true,
   imports: [DatePipe, RouterModule, FormsModule],
   templateUrl: './details.html',
   styleUrl: './details.css',
