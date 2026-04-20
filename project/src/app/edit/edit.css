@@ -110,6 +110,20 @@ input:focus, textarea:focus {
   transform: scale(0.98);
 }
 
+.error-msg {
+  color: #e74c3c; 
+  font-size: 0.8rem;
+  margin-top: 4px;
+  display: block; 
+}
+
+
+input.ng-invalid.ng-touched, 
+textarea.ng-invalid.ng-touched {
+  border-color: #e74c3c !important;
+}
+
+
 /* RESPONSIVE */
 @media (max-width: 480px) {
   .actions {
