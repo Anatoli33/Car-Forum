@@ -75,3 +75,21 @@
 .btn-submit:hover {
   background: #1d4ed8;
 }
+.error-msg {
+  color: #e74c3c; 
+  font-size: 0.8rem;
+  margin-top: 4px;
+  display: block; 
+}
+
+
+input.ng-invalid.ng-touched, 
+textarea.ng-invalid.ng-touched {
+  border-color: #e74c3c !important;
+}
+
+
+.btn-submit:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
