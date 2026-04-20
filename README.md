@@ -188,9 +188,10 @@ http://localhost:4200
 ---
 
 ## 🔒 Future Improvements
+* 🛠️ Technical Upgrades
 * 📱 Fully responsive design
 * 🔎 Search & filtering
-
+* 🛠️ Better tags functionality
 ---
 
 ## 🧠 What I Learned
