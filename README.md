@@ -15,7 +15,37 @@ Street Garage simulates a real automotive community platform where users can:
 * Explore content from other users
 
 ---
+## 📘 Functional Guide
 
+### 1. Purpose of the Application
+**Street Garage** is a specialized platform for automotive enthusiasts, designed to combine the visual appeal of a car showcase with the utility of a technical forum. The application's purpose is to allow users to document their vehicle projects, share technical specifications, and seek advice from a community of like-minded individuals. It solves the problem of scattered automotive information by providing a centralized hub for car builds and technical Q&A.
+
+### 2. Main User Flows
+
+* **Public Exploration (Guest Flow):** Unauthenticated users can land on the platform and browse the public "Cars" feed and "Q&A" sections. This allows them to see the value of the community before committing to a registration.
+* **User Onboarding (Auth Flow):** Users can create an account via the Register page or log in with existing credentials. Successful authentication unlocks the ability to contribute content and interact with others.
+* **Content Creation & Management (Owner Flow):** Once logged in, a user can navigate to "Add Car" or "Ask Question". They have exclusive rights to manage their own posts—specifically, they can edit or delete their content, while others can only view or interact with it (e.g., liking a post).
+* **Active Interaction (Community Flow):** Users interact with the system by exploring posts, liking car builds (with instant UI feedback).
+
+### 3. Explanation of the Core Features
+
+* **Vehicle Showcase (CRUD):** A comprehensive system for managing car profiles. Users can input specific data (Brand, Model, Year, Description) and images, which are stored in Firebase. The system ensures that only the creator of the post can modify it.
+* **Automotive Q&A Section:** A dedicated area for technical inquiries. It uses a clean, text-focused UI to prioritize readability for technical advice and troubleshooting steps.
+* **Route Protection & Security:** The application uses three distinct Route Guards:
+    * `authGuard` to protect private data.
+    * `guestGuard` to hide login/register forms from authenticated users.
+    * `isOwnerGuard` to prevent unauthorized users from accessing the edit/delete routes of content they don't own.
+* **Signal-Based Reactivity:** Utilizes Angular Signals for high-performance state management, ensuring the UI stays in sync with the backend data without unnecessary re-renders.
+
+### 4. How the User Interacts with the System
+
+* **Interactive Forms:** Users submit data through validated reactive forms. The system provides immediate feedback if a field (like a URL or a required description) is incorrect.
+* **Dynamic Navigation:** The application's header changes dynamically based on the user’s authentication state, providing a personalized navigation experience.
+* **Instant UI Feedback:** Through optimistic updates, when a user "Likes" a car, the heart icon and counter update immediately, providing a "snappy" and modern feel before the server confirmation arrives.
+* **Error Notifications:** The system communicates with the user through descriptive error messages in case of failed logins, network issues, or unauthorized access attempts.
+
+
+---
 ## ✨ Features
 
 ### 🚘 Cars
@@ -62,7 +92,7 @@ Street Garage simulates a real automotive community platform where users can:
 | -------- | ------------------------------ |
 | Frontend | Angular (Standalone + Signals) |
 | Backend  | Firebase Firestore             |
-| Auth     | Firebase Auth *(planned)*      |
+| Auth     | Firebase Auth   |
 | Styling  | CSS                            |
 
 ---
@@ -72,8 +102,7 @@ Street Garage simulates a real automotive community platform where users can:
 ```
 src/
  ├── app/
- │   ├── components/   # Reusable UI components
- │   ├── pages/        # Feature pages (Feed, Q&A, etc.)
+ │   ├── guards/       # Auth & Owner security guards
  │   ├── services/     # Firebase logic & data handling
  │   ├── interfaces/   # TypeScript models
 ```
@@ -117,14 +146,17 @@ http://localhost:4200
 
 ```ts
 {
-  id: string
-  brand: string
-  model: string
-  year: number
-  description: string
-  image: string
-  tags: string
-  createdAt: timestamp
+  id?: string;
+  brand: string;
+  model: string;
+  year: number;
+  description: string;
+  image: string;
+  tags?: string[];
+  createdAt: Date;
+  ownerId?: string;
+  likes?: number;
+  likedBy?: string[];
 }
 ```
 
@@ -132,11 +164,24 @@ http://localhost:4200
 
 ```ts
 {
-  id: string
-  title: string
-  description: string
-  tags: string
-  createdAt: timestamp
+  id?: string;
+  title: string;
+  description: string;
+  tags?: string;
+  createdAt: Date;
+  likes: string[];
+  ownerId?: string;
+}
+```
+### comments
+
+```ts
+{
+  id?: string;
+  text: string;
+  userId: string;
+  username: string;
+  createdAt: Date;
 }
 ```
 
