@@ -44,6 +44,35 @@ Street Garage simulates a real automotive community platform where users can:
 * **Instant UI Feedback:** Through optimistic updates, when a user "Likes" a car, the heart icon and counter update immediately, providing a "snappy" and modern feel before the server confirmation arrives.
 * **Error Notifications:** The system communicates with the user through descriptive error messages in case of failed logins, network issues, or unauthorized access attempts.
 
+---
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Anatoli33/Car-Forum
+cd project
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+
+
+### 3. Run the application
+
+```bash
+ng serve
+```
+
+Open:
+
+```
+http://localhost:4200
+```
 
 ---
 ## ✨ Features
@@ -105,37 +134,6 @@ src/
  │   ├── guards/       # Auth & Owner security guards
  │   ├── services/     # Firebase logic & data handling
  │   ├── interfaces/   # TypeScript models
-```
-
----
-
-## 🚀 Getting Started
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/Anatoli33/Car-Forum
-cd project
-```
-
-### 2. Install dependencies
-
-```bash
-npm install
-```
-
-
-
-### 3. Run the application
-
-```bash
-ng serve
-```
-
-Open:
-
-```
-http://localhost:4200
 ```
 
 ---
